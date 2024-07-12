@@ -1,7 +1,7 @@
 #include "aard.h"
 #include <iostream>
 
-void testFunc(uint64_t idk, uint64_t* idk2, uint64_t ret) {
+void testFunc(uint64_t idk, CScriptStackFrame* idk2, uint64_t ret) {
 	MessageBox(nullptr, L"Hello from test", L"test", MB_OK);
 }
 
