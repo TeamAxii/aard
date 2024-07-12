@@ -7,8 +7,8 @@ void testFunc(uint64_t idk, CScriptStackFrame* idk2, uint64_t ret) {
 
 extern "C" {
 	__declspec(dllexport) void plugin() {
-		CFunction* function = nullptr;
 		auto memory = CFunction::AllocFunc(0xC0, 0x1);
+		CFunction* function = nullptr;
 
 		if (memory) {
 			memset(memory, 0, 0xC0);
