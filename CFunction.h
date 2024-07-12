@@ -5,12 +5,12 @@
 #include "CScriptStackFrame.h"
 #include <iostream>
 
-using SFunction = void(*)(uint64_t, CScriptStackFrame*, uint64_t);
+using SFunction = void(void*, CScriptStackFrame*, uint64_t*);
 
 class CFunction : IRTTIBaseObject
 {
 public:
-	CFunction(int32_t name_hash, SFunction function) {
+	CFunction(uint32_t* name_hash, SFunction function) {
 		std::cout << "CFunction" << std::endl;
 
 		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
@@ -18,7 +18,7 @@ public:
 
 		uint64_t address = base + offset;
 
-		typedef void (*CFunctionPtr)(CFunction*, int32_t, SFunction);
+		typedef void (*CFunctionPtr)(CFunction*, uint32_t*, SFunction*);
 		reinterpret_cast<CFunctionPtr>(address)(this, name_hash, function);
 	};
 

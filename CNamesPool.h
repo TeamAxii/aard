@@ -6,14 +6,14 @@
 class CNamesPool
 {
 public:
-	static uint32_t AddEntry(const wchar_t *name) {
+	static uint32_t* AddEntry(const wchar_t *name) {
 		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr)); // Base exe address
 		auto offset = 0x014593A0; // Original AddEntry offset
 
 		uint64_t address = base + offset;
 
 		// typedef uint32_t (*AddEntryPtr)(LPCRITICAL_SECTION, const wchar_t *);
-		using AddEntryPtr = uint32_t(*)(LPCRITICAL_SECTION, const wchar_t*);
+		using AddEntryPtr = uint32_t*(*)(LPCRITICAL_SECTION, const wchar_t*);
 		return reinterpret_cast<AddEntryPtr>(address)(CNamesPool::Get(), name);
 	};
 
