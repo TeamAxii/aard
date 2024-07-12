@@ -2,5 +2,6 @@
 
 class CScriptStackFrame
 {
+	virtual ~CScriptStackFrame() = default;
 };
 

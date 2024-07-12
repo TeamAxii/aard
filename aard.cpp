@@ -7,17 +7,15 @@ void testFunc(uint64_t idk, CScriptStackFrame* idk2, uint64_t ret) {
 
 extern "C" {
 	__declspec(dllexport) void plugin() {
-		auto name = CNamesPool::AddEntry(L"Test");
+		CFunction* function = nullptr;
+		auto memory = CFunction::AllocFunc(0xC0, 0x1);
 
-		std::cout << name << std::endl;
+		if (memory) {
+			memset(memory, 0, 0xC0);
+			auto name = CNamesPool::AddEntry(L"Test");
+			function = new (memory) CFunction(name, testFunc);
+		}
 
-		// FAILS
-		auto function = new CFunction(name, testFunc);
-
-		std::cout << "Created function" << std::endl;
-
-		auto system = CRTTISystem::Get();
-
-		system->RegisterGlobalFunction(function);
+		CRTTISystem::Get()->RegisterGlobalFunction(function);
 	}
 }

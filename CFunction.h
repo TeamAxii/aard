@@ -13,8 +13,6 @@ class CFunction : IRTTIBaseObject
 public:
 	template<typename T>
 	CFunction(int32_t name_hash, SFunction<T> function) {
-		auto mem = AllocFunc();
-
 		std::cout << "CFunction" << std::endl;
 
 		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
@@ -23,10 +21,10 @@ public:
 		uint64_t address = base + offset;
 
 		typedef void (*CFunctionPtr)(CFunction*, int32_t, SFunction<T>);
-		reinterpret_cast<CFunctionPtr>(address)(mem, name_hash, function);
+		reinterpret_cast<CFunctionPtr>(address)(this, name_hash, function);
 	};
 
-	static CFunction* AllocFunc() {
+	static CFunction* AllocFunc(uint32_t size, uint32_t alignment) {
 		std::cout << "Allocating func" << std::endl;
 
 		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
@@ -34,7 +32,7 @@ public:
 		uintptr_t address = base + 0x2846B0;
 
 		typedef CFunction* (*Alloc)(uint32_t, uint32_t);
-		return reinterpret_cast<Alloc>(address)(0xc0, 0x1);
+		return reinterpret_cast<Alloc>(address)(size, alignment);
 	};
 
 	int64_t may_parentClass; // 0x08
