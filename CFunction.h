@@ -26,7 +26,7 @@ public:
 		reinterpret_cast<CFunctionPtr>(address)(mem, name_hash, function);
 	};
 
-	CFunction* AllocFunc() {
+	static CFunction* AllocFunc() {
 		std::cout << "Allocating func" << std::endl;
 
 		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
