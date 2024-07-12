@@ -12,7 +12,8 @@ public:
 
 		uint64_t address = base + offset;
 
-		typedef uint32_t (*AddEntryPtr)(LPCRITICAL_SECTION, const wchar_t *);
+		// typedef uint32_t (*AddEntryPtr)(LPCRITICAL_SECTION, const wchar_t *);
+		using AddEntryPtr = uint32_t(*)(LPCRITICAL_SECTION, const wchar_t*);
 		return reinterpret_cast<AddEntryPtr>(address)(CNamesPool::Get(), name);
 	};
 
