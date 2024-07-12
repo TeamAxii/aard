@@ -6,7 +6,7 @@
 #include <iostream>
 
 template<typename T>
-using SFunction = void(*)(uint64_t *, CScriptStackFrame*, T);
+using SFunction = void(*)(uint64_t, uint64_t *, T);
 
 class CFunction : IRTTIBaseObject
 {
@@ -15,13 +15,15 @@ public:
 	CFunction(int32_t name_hash, SFunction<T> function) {
 		std::cout << "CFunction" << std::endl;
 
-		auto base = reinterpret_cast<uintptr_t>(GetModuleHandle(nullptr));
+		// auto mem = Alloc<CFunction>;
+
+		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
 		auto offset = 0x01495FA0;
 
-		uintptr_t address = base + offset;
+		uint64_t address = base + offset;
 
 		typedef void (*CFunctionPtr)(CFunction*, int32_t, SFunction<T>);
-		reinterpret_cast<CFunctionPtr>(address)(this, name_hash, function, 5);
+		reinterpret_cast<CFunctionPtr>(address)(mem, name_hash, function);
 	};
 
 	int64_t may_parentClass; // 0x08
