@@ -21,7 +21,7 @@ public:
 		uintptr_t address = base + offset;
 
 		typedef void (*CFunctionPtr)(CFunction*, int32_t, SFunction<T>);
-		reinterpret_cast<CFunctionPtr>(address)(this, name_hash, function);
+		reinterpret_cast<CFunctionPtr>(address)(this, name_hash, function, 5);
 	};
 
 	int64_t may_parentClass; // 0x08
