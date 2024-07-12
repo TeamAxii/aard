@@ -14,6 +14,8 @@ extern "C" {
 		// FAILS
 		auto function = new CFunction(name, testFunc);
 
+		std::cout << "Created function" << std::endl;
+
 		auto system = CRTTISystem::Get();
 
 		system->RegisterGlobalFunction(function);
