@@ -15,15 +15,22 @@ public:
 	CFunction(int32_t name_hash, SFunction<T> function) {
 		std::cout << "CFunction" << std::endl;
 
-		// auto mem = Alloc<CFunction>;
-
 		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
 		auto offset = 0x01495FA0;
 
 		uint64_t address = base + offset;
 
 		typedef void (*CFunctionPtr)(CFunction*, int32_t, SFunction<T>);
-		reinterpret_cast<CFunctionPtr>(address)(mem, name_hash, function);
+		reinterpret_cast<CFunctionPtr>(address)(AllocFunc(), name_hash, function);
+	};
+
+	CFunction* AllocFunc() {
+		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
+
+		uintptr_t address = base + 0x2846B0;
+
+		typedef CFunction* (*Alloc)(uint32_t, uint32_t);
+		return reinterpret_cast<Alloc>(address)(0x0, 0x10);
 	};
 
 	int64_t may_parentClass; // 0x08
