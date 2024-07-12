@@ -16,7 +16,7 @@ public:
 		auto base = reinterpret_cast<uint64_t>(GetModuleHandle(nullptr));
 		auto offset = 0x01495FA0;
 
-		uint64_t address = base + offset;
+		uintptr_t address = base + offset;
 
 		typedef void (*CFunctionPtr)(CFunction*, uint32_t*, SFunction*);
 		reinterpret_cast<CFunctionPtr>(address)(this, name_hash, function);
